@@ -9,8 +9,10 @@ import (
 	"time"
 
 	grpc2 "github.com/NpoolPlatform/cloud-hashing-staker/pkg/grpc"
+	constant "github.com/NpoolPlatform/cloud-hashing-staker/pkg/message/const"
 	accountlock "github.com/NpoolPlatform/cloud-hashing-staker/pkg/middleware/account"
 	currency "github.com/NpoolPlatform/cloud-hashing-staker/pkg/middleware/currency"
+	"go.opentelemetry.io/otel"
 
 	appusermgrpb "github.com/NpoolPlatform/message/npool/appusermgr"
 	billingpb "github.com/NpoolPlatform/message/npool/cloud-hashing-billing"
@@ -506,6 +508,9 @@ func onCoinLimitsChecker(ctx context.Context, coinInfo *coininfopb.CoinInfo) err
 }
 
 func onLimitsChecker(ctx context.Context) {
+	_, span := otel.Tracer(constant.ServiceName).Start(ctx, "CreatePlatformCoinAccount")
+	defer span.End()
+
 	coins, err := grpc2.GetCoinInfos(ctx, &coininfopb.GetCoinInfosRequest{})
 	if err != nil {
 		logger.Sugar().Errorf("fail get coin infos: %v", err)

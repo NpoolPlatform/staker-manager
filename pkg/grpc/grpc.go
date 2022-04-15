@@ -4,7 +4,9 @@ import (
 	"context"
 	"time"
 
+	constant "github.com/NpoolPlatform/cloud-hashing-staker/pkg/message/const"
 	grpc2 "github.com/NpoolPlatform/go-service-framework/pkg/grpc"
+	"go.opentelemetry.io/otel"
 
 	goodsconst "github.com/NpoolPlatform/cloud-hashing-goods/pkg/message/const" //nolint
 	goodspb "github.com/NpoolPlatform/message/npool/cloud-hashing-goods"
@@ -56,6 +58,9 @@ func GetGoods(ctx context.Context, in *goodspb.GetGoodsRequest) ([]*goodspb.Good
 //---------------------------------------------------------------------------------------------------------------------------
 
 func GetCoinInfos(ctx context.Context, in *coininfopb.GetCoinInfosRequest) ([]*coininfopb.CoinInfo, error) {
+	_, span := otel.Tracer(constant.ServiceName).Start(ctx, "CreatePlatformCoinAccount")
+	defer span.End()
+
 	conn, err := grpc2.GetGRPCConn(coininfoconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
 		return nil, xerrors.Errorf("fail get coininfo connection: %v", err)
