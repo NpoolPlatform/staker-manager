@@ -9,8 +9,6 @@ import (
 	"time"
 
 	"github.com/go-resty/resty/v2"
-
-	"golang.org/x/xerrors"
 )
 
 const (
@@ -53,22 +51,22 @@ func USDPrice(ctx context.Context, coinName string) (float64, error) {
 
 	resp, err := cli.R().Get(url)
 	if err != nil {
-		return 0, xerrors.Errorf("fail get currency %v: %v", coin, err)
+		return 0, fmt.Errorf("fail get currency %v: %v", coin, err)
 	}
 	respMap := map[string]map[string]float64{}
 	err = json.Unmarshal(resp.Body(), &respMap)
 	if err != nil {
-		return 0, xerrors.Errorf("fail parse currency %v: %v", coin, err)
+		return 0, fmt.Errorf("fail parse currency %v: %v", coin, err)
 	}
 
 	priceMap, ok := respMap[coin]
 	if !ok {
-		return 0, xerrors.Errorf("fail get currency %v", coin)
+		return 0, fmt.Errorf("fail get currency %v", coin)
 	}
 
 	myPrice, ok := priceMap["usd"]
 	if !ok {
-		return 0, xerrors.Errorf("fail get usd currency")
+		return 0, fmt.Errorf("fail get usd currency")
 	}
 
 	return myPrice, nil

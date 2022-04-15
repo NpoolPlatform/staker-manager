@@ -17,7 +17,6 @@ import (
 	sphinxproxypb "github.com/NpoolPlatform/message/npool/sphinxproxy"
 
 	"github.com/google/uuid"
-	"golang.org/x/xerrors"
 )
 
 func watchPaymentState(ctx context.Context) { //nolint
@@ -166,7 +165,7 @@ func releasePaymentAccount(ctx context.Context, payment *billingpb.GoodPayment) 
 func checkAndTransfer(ctx context.Context, payment *billingpb.GoodPayment, coinInfo *coininfopb.CoinInfo) error { //nolint
 	err := accountlock.Lock(payment.AccountID)
 	if err != nil {
-		return xerrors.Errorf("fail lock account: %v", err)
+		return fmt.Errorf("fail lock account: %v", err)
 	}
 	defer releasePaymentAccount(ctx, payment)
 
@@ -176,14 +175,14 @@ func checkAndTransfer(ctx context.Context, payment *billingpb.GoodPayment, coinI
 		Info: payment,
 	})
 	if err != nil {
-		return xerrors.Errorf("fail to update good payment: %v", err)
+		return fmt.Errorf("fail to update good payment: %v", err)
 	}
 
 	account, err := grpc2.GetBillingAccount(ctx, &billingpb.GetCoinAccountRequest{
 		ID: payment.AccountID,
 	})
 	if err != nil || account == nil {
-		return xerrors.Errorf("fail get account: %v", err)
+		return fmt.Errorf("fail get account: %v", err)
 	}
 
 	balance, err := grpc2.GetBalance(ctx, &sphinxproxypb.GetBalanceRequest{
@@ -191,7 +190,7 @@ func checkAndTransfer(ctx context.Context, payment *billingpb.GoodPayment, coinI
 		Address: account.Address,
 	})
 	if err != nil {
-		return xerrors.Errorf("fail get wallet balance of %v %v: %v", coinInfo.Name, account.Address, err)
+		return fmt.Errorf("fail get wallet balance of %v %v: %v", coinInfo.Name, account.Address, err)
 	}
 
 	coinLimit := 0
@@ -200,7 +199,7 @@ func checkAndTransfer(ctx context.Context, payment *billingpb.GoodPayment, coinI
 		CoinTypeID: coinInfo.ID,
 	})
 	if err != nil || coinsetting == nil {
-		return xerrors.Errorf("fail get coin setting: %v", err)
+		return fmt.Errorf("fail get coin setting: %v", err)
 	}
 
 	coinLimit = int(coinsetting.PaymentAccountCoinAmount)
@@ -210,7 +209,7 @@ func checkAndTransfer(ctx context.Context, payment *billingpb.GoodPayment, coinI
 	if int(balance.Balance) <= coinLimit || balance.Balance <= coinInfo.ReservedAmount {
 		err = accountlock.Unlock(payment.AccountID)
 		if err != nil {
-			return xerrors.Errorf("fail unlock account %v: %v", payment.AccountID, err)
+			return fmt.Errorf("fail unlock account %v: %v", payment.AccountID, err)
 		}
 		return nil
 	}
@@ -230,7 +229,7 @@ func checkAndTransfer(ctx context.Context, payment *billingpb.GoodPayment, coinI
 		},
 	})
 	if err != nil {
-		return xerrors.Errorf("fail create transaction of %v: %v", payment.AccountID, err)
+		return fmt.Errorf("fail create transaction of %v: %v", payment.AccountID, err)
 	}
 
 	return nil

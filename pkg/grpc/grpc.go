@@ -2,6 +2,7 @@ package grpc
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	constant "github.com/NpoolPlatform/cloud-hashing-staker/pkg/message/const"
@@ -25,8 +26,6 @@ import (
 
 	appusermgrconst "github.com/NpoolPlatform/appuser-manager/pkg/message/const" //nolint
 	appusermgrpb "github.com/NpoolPlatform/message/npool/appusermgr"
-
-	"golang.org/x/xerrors"
 )
 
 const (
@@ -38,7 +37,7 @@ const (
 func GetGoods(ctx context.Context, in *goodspb.GetGoodsRequest) ([]*goodspb.GoodInfo, error) {
 	conn, err := grpc2.GetGRPCConn(goodsconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get goods connection: %v", err)
+		return nil, fmt.Errorf("fail get goods connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -49,7 +48,7 @@ func GetGoods(ctx context.Context, in *goodspb.GetGoodsRequest) ([]*goodspb.Good
 
 	resp, err := cli.GetGoods(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get goods: %v", err)
+		return nil, fmt.Errorf("fail get goods: %v", err)
 	}
 
 	return resp.Infos, nil
@@ -63,7 +62,7 @@ func GetCoinInfos(ctx context.Context, in *coininfopb.GetCoinInfosRequest) ([]*c
 
 	conn, err := grpc2.GetGRPCConn(coininfoconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get coininfo connection: %v", err)
+		return nil, fmt.Errorf("fail get coininfo connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -74,7 +73,7 @@ func GetCoinInfos(ctx context.Context, in *coininfopb.GetCoinInfosRequest) ([]*c
 
 	resp, err := cli.GetCoinInfos(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get coin infos: %v", err)
+		return nil, fmt.Errorf("fail get coin infos: %v", err)
 	}
 
 	return resp.Infos, nil
@@ -83,7 +82,7 @@ func GetCoinInfos(ctx context.Context, in *coininfopb.GetCoinInfosRequest) ([]*c
 func GetCoinInfo(ctx context.Context, in *coininfopb.GetCoinInfoRequest) (*coininfopb.CoinInfo, error) {
 	conn, err := grpc2.GetGRPCConn(coininfoconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get coininfo connection: %v", err)
+		return nil, fmt.Errorf("fail get coininfo connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -94,7 +93,7 @@ func GetCoinInfo(ctx context.Context, in *coininfopb.GetCoinInfoRequest) (*coini
 
 	resp, err := cli.GetCoinInfo(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get coin info: %v", err)
+		return nil, fmt.Errorf("fail get coin info: %v", err)
 	}
 
 	return resp.Info, nil
@@ -105,7 +104,7 @@ func GetCoinInfo(ctx context.Context, in *coininfopb.GetCoinInfoRequest) (*coini
 func GetOrdersByGood(ctx context.Context, in *orderpb.GetOrdersByGoodRequest) ([]*orderpb.Order, error) {
 	conn, err := grpc2.GetGRPCConn(orderconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get order connection: %v", err)
+		return nil, fmt.Errorf("fail get order connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -116,7 +115,7 @@ func GetOrdersByGood(ctx context.Context, in *orderpb.GetOrdersByGoodRequest) ([
 
 	resp, err := cli.GetOrdersByGood(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get orders: %v", err)
+		return nil, fmt.Errorf("fail get orders: %v", err)
 	}
 
 	return resp.Infos, nil
@@ -125,7 +124,7 @@ func GetOrdersByGood(ctx context.Context, in *orderpb.GetOrdersByGoodRequest) ([
 func GetCompensatesByOrder(ctx context.Context, in *orderpb.GetCompensatesByOrderRequest) ([]*orderpb.Compensate, error) {
 	conn, err := grpc2.GetGRPCConn(orderconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get order connection: %v", err)
+		return nil, fmt.Errorf("fail get order connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -136,7 +135,7 @@ func GetCompensatesByOrder(ctx context.Context, in *orderpb.GetCompensatesByOrde
 
 	resp, err := cli.GetCompensatesByOrder(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get compensates: %v", err)
+		return nil, fmt.Errorf("fail get compensates: %v", err)
 	}
 
 	return resp.Infos, nil
@@ -145,7 +144,7 @@ func GetCompensatesByOrder(ctx context.Context, in *orderpb.GetCompensatesByOrde
 func GetPaymentByOrder(ctx context.Context, in *orderpb.GetPaymentByOrderRequest) (*orderpb.Payment, error) {
 	conn, err := grpc2.GetGRPCConn(orderconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get payment by order: %v", err)
+		return nil, fmt.Errorf("fail get payment by order: %v", err)
 	}
 	defer conn.Close()
 
@@ -156,7 +155,7 @@ func GetPaymentByOrder(ctx context.Context, in *orderpb.GetPaymentByOrderRequest
 
 	resp, err := cli.GetPaymentByOrder(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get payment: %v", err)
+		return nil, fmt.Errorf("fail get payment: %v", err)
 	}
 
 	return resp.Info, nil
@@ -165,7 +164,7 @@ func GetPaymentByOrder(ctx context.Context, in *orderpb.GetPaymentByOrderRequest
 func UpdatePayment(ctx context.Context, in *orderpb.UpdatePaymentRequest) (*orderpb.Payment, error) {
 	conn, err := grpc2.GetGRPCConn(orderconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get payment by order: %v", err)
+		return nil, fmt.Errorf("fail get payment by order: %v", err)
 	}
 	defer conn.Close()
 
@@ -176,7 +175,7 @@ func UpdatePayment(ctx context.Context, in *orderpb.UpdatePaymentRequest) (*orde
 
 	resp, err := cli.UpdatePayment(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail update payment: %v", err)
+		return nil, fmt.Errorf("fail update payment: %v", err)
 	}
 
 	return resp.Info, nil
@@ -185,7 +184,7 @@ func UpdatePayment(ctx context.Context, in *orderpb.UpdatePaymentRequest) (*orde
 func GetPaymentsByState(ctx context.Context, in *orderpb.GetPaymentsByStateRequest) ([]*orderpb.Payment, error) {
 	conn, err := grpc2.GetGRPCConn(orderconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get payment by order: %v", err)
+		return nil, fmt.Errorf("fail get payment by order: %v", err)
 	}
 	defer conn.Close()
 
@@ -196,7 +195,7 @@ func GetPaymentsByState(ctx context.Context, in *orderpb.GetPaymentsByStateReque
 
 	resp, err := cli.GetPaymentsByState(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get payments: %v", err)
+		return nil, fmt.Errorf("fail get payments: %v", err)
 	}
 
 	return resp.Infos, nil
@@ -207,7 +206,7 @@ func GetPaymentsByState(ctx context.Context, in *orderpb.GetPaymentsByStateReque
 func CreatePlatformBenefit(ctx context.Context, in *billingpb.CreatePlatformBenefitRequest) (*billingpb.PlatformBenefit, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get billing connection: %v", err)
+		return nil, fmt.Errorf("fail get billing connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -218,7 +217,7 @@ func CreatePlatformBenefit(ctx context.Context, in *billingpb.CreatePlatformBene
 
 	resp, err := cli.CreatePlatformBenefit(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail create platform benefit: %v", err)
+		return nil, fmt.Errorf("fail create platform benefit: %v", err)
 	}
 
 	return resp.Info, nil
@@ -227,7 +226,7 @@ func CreatePlatformBenefit(ctx context.Context, in *billingpb.CreatePlatformBene
 func CreateUserBenefit(ctx context.Context, in *billingpb.CreateUserBenefitRequest) (*billingpb.UserBenefit, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get billing connection: %v", err)
+		return nil, fmt.Errorf("fail get billing connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -238,7 +237,7 @@ func CreateUserBenefit(ctx context.Context, in *billingpb.CreateUserBenefitReque
 
 	resp, err := cli.CreateUserBenefit(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail create user benefit: %v", err)
+		return nil, fmt.Errorf("fail create user benefit: %v", err)
 	}
 
 	return resp.Info, nil
@@ -247,7 +246,7 @@ func CreateUserBenefit(ctx context.Context, in *billingpb.CreateUserBenefitReque
 func GetBillingAccount(ctx context.Context, in *billingpb.GetCoinAccountRequest) (*billingpb.CoinAccountInfo, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get billing connection: %v", err)
+		return nil, fmt.Errorf("fail get billing connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -258,7 +257,7 @@ func GetBillingAccount(ctx context.Context, in *billingpb.GetCoinAccountRequest)
 
 	resp, err := cli.GetCoinAccount(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get coin account: %v", err)
+		return nil, fmt.Errorf("fail get coin account: %v", err)
 	}
 
 	return resp.Info, nil
@@ -267,7 +266,7 @@ func GetBillingAccount(ctx context.Context, in *billingpb.GetCoinAccountRequest)
 func GetPlatformSetting(ctx context.Context, in *billingpb.GetPlatformSettingRequest) (*billingpb.PlatformSetting, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get billing connection: %v", err)
+		return nil, fmt.Errorf("fail get billing connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -278,7 +277,7 @@ func GetPlatformSetting(ctx context.Context, in *billingpb.GetPlatformSettingReq
 
 	resp, err := cli.GetPlatformSetting(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get platform setting: %v", err)
+		return nil, fmt.Errorf("fail get platform setting: %v", err)
 	}
 
 	return resp.Info, nil
@@ -287,7 +286,7 @@ func GetPlatformSetting(ctx context.Context, in *billingpb.GetPlatformSettingReq
 func GetPlatformBenefitsByGood(ctx context.Context, in *billingpb.GetPlatformBenefitsByGoodRequest) ([]*billingpb.PlatformBenefit, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get billing connection: %v", err)
+		return nil, fmt.Errorf("fail get billing connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -298,7 +297,7 @@ func GetPlatformBenefitsByGood(ctx context.Context, in *billingpb.GetPlatformBen
 
 	resp, err := cli.GetPlatformBenefitsByGood(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get platform benefits: %v", err)
+		return nil, fmt.Errorf("fail get platform benefits: %v", err)
 	}
 
 	return resp.Infos, nil
@@ -307,7 +306,7 @@ func GetPlatformBenefitsByGood(ctx context.Context, in *billingpb.GetPlatformBen
 func GetLatestPlatformBenefitByGood(ctx context.Context, in *billingpb.GetLatestPlatformBenefitByGoodRequest) (*billingpb.PlatformBenefit, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get billing connection: %v", err)
+		return nil, fmt.Errorf("fail get billing connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -318,7 +317,7 @@ func GetLatestPlatformBenefitByGood(ctx context.Context, in *billingpb.GetLatest
 
 	resp, err := cli.GetLatestPlatformBenefitByGood(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get latest platform benefit: %v", err)
+		return nil, fmt.Errorf("fail get latest platform benefit: %v", err)
 	}
 
 	return resp.Info, nil
@@ -327,7 +326,7 @@ func GetLatestPlatformBenefitByGood(ctx context.Context, in *billingpb.GetLatest
 func GetLatestUserBenefitByGoodAppUser(ctx context.Context, in *billingpb.GetLatestUserBenefitByGoodAppUserRequest) (*billingpb.UserBenefit, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get billing connection: %v", err)
+		return nil, fmt.Errorf("fail get billing connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -338,7 +337,7 @@ func GetLatestUserBenefitByGoodAppUser(ctx context.Context, in *billingpb.GetLat
 
 	resp, err := cli.GetLatestUserBenefitByGoodAppUser(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get latest user benefit: %v", err)
+		return nil, fmt.Errorf("fail get latest user benefit: %v", err)
 	}
 
 	return resp.Info, nil
@@ -347,7 +346,7 @@ func GetLatestUserBenefitByGoodAppUser(ctx context.Context, in *billingpb.GetLat
 func GetCoinAccountTransactionsByCoinAccount(ctx context.Context, in *billingpb.GetCoinAccountTransactionsByCoinAccountRequest) ([]*billingpb.CoinAccountTransaction, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get billing connection: %v", err)
+		return nil, fmt.Errorf("fail get billing connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -358,7 +357,7 @@ func GetCoinAccountTransactionsByCoinAccount(ctx context.Context, in *billingpb.
 
 	resp, err := cli.GetCoinAccountTransactionsByCoinAccount(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get coin account transactions: %v", err)
+		return nil, fmt.Errorf("fail get coin account transactions: %v", err)
 	}
 
 	return resp.Infos, nil
@@ -367,7 +366,7 @@ func GetCoinAccountTransactionsByCoinAccount(ctx context.Context, in *billingpb.
 func GetCoinAccountTransactionsByState(ctx context.Context, in *billingpb.GetCoinAccountTransactionsByStateRequest) ([]*billingpb.CoinAccountTransaction, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get billing connection: %v", err)
+		return nil, fmt.Errorf("fail get billing connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -378,7 +377,7 @@ func GetCoinAccountTransactionsByState(ctx context.Context, in *billingpb.GetCoi
 
 	resp, err := cli.GetCoinAccountTransactionsByState(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get coin account transactions: %v", err)
+		return nil, fmt.Errorf("fail get coin account transactions: %v", err)
 	}
 
 	return resp.Infos, nil
@@ -387,7 +386,7 @@ func GetCoinAccountTransactionsByState(ctx context.Context, in *billingpb.GetCoi
 func GetCoinAccountTransactionsByGoodState(ctx context.Context, in *billingpb.GetCoinAccountTransactionsByGoodStateRequest) ([]*billingpb.CoinAccountTransaction, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get billing connection: %v", err)
+		return nil, fmt.Errorf("fail get billing connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -398,7 +397,7 @@ func GetCoinAccountTransactionsByGoodState(ctx context.Context, in *billingpb.Ge
 
 	resp, err := cli.GetCoinAccountTransactionsByGoodState(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get coin account transactions: %v", err)
+		return nil, fmt.Errorf("fail get coin account transactions: %v", err)
 	}
 
 	return resp.Infos, nil
@@ -407,7 +406,7 @@ func GetCoinAccountTransactionsByGoodState(ctx context.Context, in *billingpb.Ge
 func CreateCoinAccountTransaction(ctx context.Context, in *billingpb.CreateCoinAccountTransactionRequest) (*billingpb.CoinAccountTransaction, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get billing connection: %v", err)
+		return nil, fmt.Errorf("fail get billing connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -418,7 +417,7 @@ func CreateCoinAccountTransaction(ctx context.Context, in *billingpb.CreateCoinA
 
 	resp, err := cli.CreateCoinAccountTransaction(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail create coin account transaction: %v", err)
+		return nil, fmt.Errorf("fail create coin account transaction: %v", err)
 	}
 
 	return resp.Info, nil
@@ -427,7 +426,7 @@ func CreateCoinAccountTransaction(ctx context.Context, in *billingpb.CreateCoinA
 func UpdateCoinAccountTransaction(ctx context.Context, in *billingpb.UpdateCoinAccountTransactionRequest) (*billingpb.CoinAccountTransaction, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get billing connection: %v", err)
+		return nil, fmt.Errorf("fail get billing connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -438,7 +437,7 @@ func UpdateCoinAccountTransaction(ctx context.Context, in *billingpb.UpdateCoinA
 
 	resp, err := cli.UpdateCoinAccountTransaction(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail update coin account transaction: %v", err)
+		return nil, fmt.Errorf("fail update coin account transaction: %v", err)
 	}
 
 	return resp.Info, nil
@@ -447,7 +446,7 @@ func UpdateCoinAccountTransaction(ctx context.Context, in *billingpb.UpdateCoinA
 func GetGoodPaymentByAccount(ctx context.Context, in *billingpb.GetGoodPaymentByAccountRequest) (*billingpb.GoodPayment, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get billing connection: %v", err)
+		return nil, fmt.Errorf("fail get billing connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -458,7 +457,7 @@ func GetGoodPaymentByAccount(ctx context.Context, in *billingpb.GetGoodPaymentBy
 
 	resp, err := cli.GetGoodPaymentByAccount(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get good payment: %v", err)
+		return nil, fmt.Errorf("fail get good payment: %v", err)
 	}
 
 	return resp.Info, nil
@@ -467,7 +466,7 @@ func GetGoodPaymentByAccount(ctx context.Context, in *billingpb.GetGoodPaymentBy
 func UpdateGoodPayment(ctx context.Context, in *billingpb.UpdateGoodPaymentRequest) (*billingpb.GoodPayment, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get billing connection: %v", err)
+		return nil, fmt.Errorf("fail get billing connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -478,7 +477,7 @@ func UpdateGoodPayment(ctx context.Context, in *billingpb.UpdateGoodPaymentReque
 
 	resp, err := cli.UpdateGoodPayment(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail update good payment: %v", err)
+		return nil, fmt.Errorf("fail update good payment: %v", err)
 	}
 
 	return resp.Info, nil
@@ -487,7 +486,7 @@ func UpdateGoodPayment(ctx context.Context, in *billingpb.UpdateGoodPaymentReque
 func GetGoodBenefitByGood(ctx context.Context, in *billingpb.GetGoodBenefitByGoodRequest) (*billingpb.GoodBenefit, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get billing connection: %v", err)
+		return nil, fmt.Errorf("fail get billing connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -498,7 +497,7 @@ func GetGoodBenefitByGood(ctx context.Context, in *billingpb.GetGoodBenefitByGoo
 
 	resp, err := cli.GetGoodBenefitByGood(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get good benefit: %v", err)
+		return nil, fmt.Errorf("fail get good benefit: %v", err)
 	}
 
 	return resp.Info, nil
@@ -507,7 +506,7 @@ func GetGoodBenefitByGood(ctx context.Context, in *billingpb.GetGoodBenefitByGoo
 func GetCoinSettingByCoin(ctx context.Context, in *billingpb.GetCoinSettingByCoinRequest) (*billingpb.CoinSetting, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get billing connection: %v", err)
+		return nil, fmt.Errorf("fail get billing connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -518,7 +517,7 @@ func GetCoinSettingByCoin(ctx context.Context, in *billingpb.GetCoinSettingByCoi
 
 	resp, err := cli.GetCoinSettingByCoin(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get coin setting: %v", err)
+		return nil, fmt.Errorf("fail get coin setting: %v", err)
 	}
 
 	return resp.Info, nil
@@ -527,7 +526,7 @@ func GetCoinSettingByCoin(ctx context.Context, in *billingpb.GetCoinSettingByCoi
 func GetGoodPayments(ctx context.Context, in *billingpb.GetGoodPaymentsRequest) ([]*billingpb.GoodPayment, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get billing connection: %v", err)
+		return nil, fmt.Errorf("fail get billing connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -538,7 +537,7 @@ func GetGoodPayments(ctx context.Context, in *billingpb.GetGoodPaymentsRequest) 
 
 	resp, err := cli.GetGoodPayments(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get good payments: %v", err)
+		return nil, fmt.Errorf("fail get good payments: %v", err)
 	}
 
 	return resp.Infos, nil
@@ -547,7 +546,7 @@ func GetGoodPayments(ctx context.Context, in *billingpb.GetGoodPaymentsRequest) 
 func CreateUserPaymentBalance(ctx context.Context, in *billingpb.CreateUserPaymentBalanceRequest) (*billingpb.UserPaymentBalance, error) {
 	conn, err := grpc2.GetGRPCConn(billingconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get payment by billing: %v", err)
+		return nil, fmt.Errorf("fail get payment by billing: %v", err)
 	}
 	defer conn.Close()
 
@@ -558,7 +557,7 @@ func CreateUserPaymentBalance(ctx context.Context, in *billingpb.CreateUserPayme
 
 	resp, err := cli.CreateUserPaymentBalance(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail create user payment balance: %v", err)
+		return nil, fmt.Errorf("fail create user payment balance: %v", err)
 	}
 
 	return resp.Info, nil
@@ -569,7 +568,7 @@ func CreateUserPaymentBalance(ctx context.Context, in *billingpb.CreateUserPayme
 func CreateAddress(ctx context.Context, in *sphinxproxypb.CreateWalletRequest) (*sphinxproxypb.WalletInfo, error) {
 	conn, err := grpc2.GetGRPCConn(sphinxproxyconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get sphinxproxy connection: %v", err)
+		return nil, fmt.Errorf("fail get sphinxproxy connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -580,7 +579,7 @@ func CreateAddress(ctx context.Context, in *sphinxproxypb.CreateWalletRequest) (
 
 	resp, err := cli.CreateWallet(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail create wallet: %v", err)
+		return nil, fmt.Errorf("fail create wallet: %v", err)
 	}
 
 	return resp.Info, nil
@@ -589,7 +588,7 @@ func CreateAddress(ctx context.Context, in *sphinxproxypb.CreateWalletRequest) (
 func GetBalance(ctx context.Context, in *sphinxproxypb.GetBalanceRequest) (*sphinxproxypb.BalanceInfo, error) {
 	conn, err := grpc2.GetGRPCConn(sphinxproxyconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get sphinxproxy connection: %v", err)
+		return nil, fmt.Errorf("fail get sphinxproxy connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -600,7 +599,7 @@ func GetBalance(ctx context.Context, in *sphinxproxypb.GetBalanceRequest) (*sphi
 
 	resp, err := cli.GetBalance(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get balance: %v", err)
+		return nil, fmt.Errorf("fail get balance: %v", err)
 	}
 
 	return resp.Info, nil
@@ -609,7 +608,7 @@ func GetBalance(ctx context.Context, in *sphinxproxypb.GetBalanceRequest) (*sphi
 func CreateTransaction(ctx context.Context, in *sphinxproxypb.CreateTransactionRequest) (*sphinxproxypb.TransactionInfo, error) {
 	conn, err := grpc2.GetGRPCConn(sphinxproxyconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get sphinxproxy connection: %v", err)
+		return nil, fmt.Errorf("fail get sphinxproxy connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -620,7 +619,7 @@ func CreateTransaction(ctx context.Context, in *sphinxproxypb.CreateTransactionR
 
 	_, err = cli.CreateTransaction(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail create transaction: %v", err)
+		return nil, fmt.Errorf("fail create transaction: %v", err)
 	}
 
 	return nil, nil
@@ -629,7 +628,7 @@ func CreateTransaction(ctx context.Context, in *sphinxproxypb.CreateTransactionR
 func GetTransaction(ctx context.Context, in *sphinxproxypb.GetTransactionRequest) (*sphinxproxypb.TransactionInfo, error) {
 	conn, err := grpc2.GetGRPCConn(sphinxproxyconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get sphinxproxy connection: %v", err)
+		return nil, fmt.Errorf("fail get sphinxproxy connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -640,7 +639,7 @@ func GetTransaction(ctx context.Context, in *sphinxproxypb.GetTransactionRequest
 
 	resp, err := cli.GetTransaction(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get transaction: %v", err)
+		return nil, fmt.Errorf("fail get transaction: %v", err)
 	}
 
 	return resp.Info, nil
@@ -651,7 +650,7 @@ func GetTransaction(ctx context.Context, in *sphinxproxypb.GetTransactionRequest
 func GetAppUserByAppUser(ctx context.Context, in *appusermgrpb.GetAppUserByAppUserRequest) (*appusermgrpb.AppUser, error) {
 	conn, err := grpc2.GetGRPCConn(appusermgrconst.ServiceName, grpc2.GRPCTAG)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get usermgr connection: %v", err)
+		return nil, fmt.Errorf("fail get usermgr connection: %v", err)
 	}
 	defer conn.Close()
 
@@ -662,7 +661,7 @@ func GetAppUserByAppUser(ctx context.Context, in *appusermgrpb.GetAppUserByAppUs
 
 	resp, err := cli.GetAppUserByAppUser(ctx, in)
 	if err != nil {
-		return nil, xerrors.Errorf("fail get app user: %v", err)
+		return nil, fmt.Errorf("fail get app user: %v", err)
 	}
 
 	return resp.Info, nil
