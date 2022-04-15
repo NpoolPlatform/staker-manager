@@ -9,9 +9,9 @@ require (
 	github.com/NpoolPlatform/cloud-hashing-billing v0.0.0-20220214123916-517341a90b77
 	github.com/NpoolPlatform/cloud-hashing-goods v0.0.0-20220224053549-7b30ca7c2e28
 	github.com/NpoolPlatform/cloud-hashing-order v0.0.0-20220225132002-fbc8b850fb8c
-	github.com/NpoolPlatform/go-service-framework v0.0.0-20220415035630-dd5689e1186f
+	github.com/NpoolPlatform/go-service-framework v0.0.0-20220415050056-c7563c825533
 	github.com/NpoolPlatform/message v0.0.0-20220414043951-017300b4fc17
-	github.com/NpoolPlatform/sphinx-coininfo v0.0.0-20220415035913-e3af495df22d
+	github.com/NpoolPlatform/sphinx-coininfo v0.0.0-20220415050252-1005c976d13d
 	github.com/NpoolPlatform/sphinx-proxy v0.0.0-20211209140052-de1778e36e36
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/google/uuid v1.3.0
